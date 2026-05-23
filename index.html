@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joni — Dev Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Syne:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;--surface:#0e1318;--surface2:#141a21;
+  --border:#1e2730;--border2:#263040;
+  --text:#d4dce8;--muted:#526070;
+  --accent:#3b9eff;--accent2:#1a6fd4;
+  --accent-dim:rgba(59,158,255,0.08);--accent-dim2:rgba(59,158,255,0.15);
+  --green:#3fb950;--green-dim:rgba(63,185,80,0.1);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--bg);color:var(--text);
+  line-height:1.6;min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(59,158,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,158,255,0.03) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(59,158,255,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 2rem}
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(8,12,16,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2rem;max-width:860px;margin:0 auto;
+}
+.logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
+  color:var(--text);display:flex;align-items:center;gap:0.5rem;
+}
+.logo-bracket{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:300}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:0.75rem;color:var(--muted);text-decoration:none;
+  letter-spacing:0.05em;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--accent)}
+.hero{padding:7rem 0 6rem;position:relative}
+.prompt-line{
+  font-size:0.75rem;color:var(--muted);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.prompt-line::before{content:'$';color:var(--accent)}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.6rem,6vw,4rem);font-weight:800;
+  line-height:1.05;letter-spacing:-0.03em;color:#eaf0f8;margin-bottom:1rem;
+}
+.hero h1 .accent{color:var(--accent)}
+.hero h1 .dim{color:var(--muted);font-weight:400}
+.hero-sub{
+  font-size:0.85rem;color:var(--muted);max-width:500px;line-height:1.8;
+  margin-bottom:2.5rem;border-left:2px solid var(--border2);padding-left:1rem;
+}
+.hero-sub .hl{color:var(--text)}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.btn-main{
+  background:var(--accent);color:#020609;
+  font-family:'JetBrains Mono',monospace;font-size:0.8rem;font-weight:700;
+  padding:0.65rem 1.4rem;border-radius:4px;text-decoration:none;
+  letter-spacing:0.02em;transition:opacity 0.2s,transform 0.15s;
+}
+.btn-main:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-ghost{
+  font-size:0.8rem;color:var(--muted);text-decoration:none;
+  display:flex;align-items:center;gap:0.35rem;transition:color 0.2s;letter-spacing:0.02em;
+}
+.btn-ghost:hover{color:var(--text)}
+.btn-ghost::after{content:'↗';font-size:0.75rem}
+.section{padding:4rem 0}
+.section-header{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.section-num{font-size:0.7rem;color:var(--accent);letter-spacing:0.1em;font-weight:500;min-width:2ch}
+.section-title{
+  font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;
+}
+.section-line{flex:1;height:1px;background:var(--border)}
+.stack-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;
+}
+.stack-item{
+  background:var(--surface);padding:1rem 1.25rem;
+  display:flex;flex-direction:column;gap:0.3rem;transition:background 0.2s;
+}
+.stack-item:hover{background:var(--surface2)}
+.stack-name{font-size:0.85rem;font-weight:500;color:var(--text);letter-spacing:0.02em}
+.stack-bar{height:2px;background:var(--border2);border-radius:2px;overflow:hidden;margin-top:0.15rem}
+.stack-fill{height:100%;background:var(--accent);border-radius:2px}
+.stack-fill.green{background:var(--green)}
+.stack-lvl{font-size:0.65rem;color:var(--muted);letter-spacing:0.05em}
+.project-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:2rem;position:relative;overflow:hidden;transition:border-color 0.25s;
+}
+.project-card:hover{border-color:var(--border2)}
+.project-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+.project-meta{display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;flex-wrap:wrap}
+.project-badge{
+  font-size:0.65rem;letter-spacing:0.08em;
+  padding:0.2rem 0.6rem;border-radius:3px;font-weight:500;
+}
+.badge-blue{background:var(--accent-dim2);color:var(--accent)}
+.badge-green{background:var(--green-dim);color:var(--green)}
+.project-title{
+  font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;
+  color:#eaf0f8;letter-spacing:-0.02em;margin-bottom:0.75rem;
+}
+.project-desc{font-size:0.82rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+.project-desc .hl{color:var(--text)}
+.tech-list{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem}
+.tech-tag{
+  font-size:0.72rem;background:var(--surface2);border:1px solid var(--border2);
+  color:var(--muted);padding:0.25rem 0.65rem;border-radius:3px;letter-spacing:0.04em;
+}
+.project-link{
+  font-size:0.78rem;color:var(--accent);text-decoration:none;
+  display:inline-flex;align-items:center;gap:0.4rem;transition:opacity 0.2s;
+}
+.project-link:hover{opacity:0.75}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;
+}
+.about-item{background:var(--surface);padding:1.25rem 1.5rem}
+.about-key{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem}
+.about-val{font-size:0.88rem;color:var(--text);font-weight:500}
+.about-val .accent{color:var(--accent)}
+.about-val .green{color:var(--green)}
+.status{display:inline-flex;align-items:center;gap:0.4rem}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.contact-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:6px;
+  padding:2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;
+}
+.contact-label{font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem}
+.contact-title{
+  font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;
+  color:#eaf0f8;letter-spacing:-0.02em;margin-bottom:0.4rem;
+}
+.contact-email{font-size:0.82rem;color:var(--accent);word-break:break-all}
+.contact-links{display:flex;flex-direction:column;gap:0.6rem}
+.contact-link{
+  display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--muted);
+  text-decoration:none;padding:0.6rem 1rem;border:1px solid var(--border);
+  border-radius:4px;white-space:nowrap;transition:border-color 0.2s,color 0.2s;
+}
+.contact-link:hover{border-color:var(--accent);color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:2rem 0;position:relative;z-index:1}
+.footer-inner{
+  max-width:860px;margin:0 auto;padding:0 2rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+}
+.footer-copy{font-size:0.72rem;color:var(--muted);letter-spacing:0.04em}
+.footer-note{font-size:0.72rem;color:var(--border2);letter-spacing:0.02em}
+.fi{opacity:0;transform:translateY(20px);animation:fi 0.7s ease forwards}
+.fi:nth-child(1){animation-delay:0.05s}
+.fi:nth-child(2){animation-delay:0.15s}
+.fi:nth-child(3){animation-delay:0.25s}
+.fi:nth-child(4){animation-delay:0.35s}
+@keyframes fi{to{opacity:1;transform:translateY(0)}}
+@media(max-width:580px){
+  .contact-box{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  .nav-links{gap:1rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-bracket">[</span>joni<span class="logo-bracket">]</span></div>
+    <ul class="nav-links">
+      <li><a href="#stack">stack</a></li>
+      <li><a href="#proyectos">proyectos</a></li>
+      <li><a href="#sobre-mi">sobre mí</a></li>
+      <li><a href="#contacto">contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="prompt-line fi"> whoami</div>
+    <h1 class="fi">Hola,<br>soy <span class="accent">Joni.</span><br><span class="dim">full stack en construcción.</span></h1>
+    <p class="hero-sub fi">
+      Estudiante de <span class="hl">DAM (2º año)</span> · Titulado en <span class="hl">SMR</span> · Construyendo bases sólidas en frontend y backend. Meta final: <span class="hl">desarrollo de videojuegos.</span>
+    </p>
+    <div class="hero-ctas fi">
+      <a href="#proyectos" class="btn-main">ver proyectos</a>
+      <a href="https://github.com/Joniitesst" class="btn-ghost" target="_blank">GitHub</a>
+      <a href="mailto:jonathanfdzprz@gmail.com" class="btn-ghost">Email</a>
+    </div>
+  </section>
+
+  <section class="section" id="stack">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Stack</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <span class="stack-name">Java</span>
+        <div class="stack-bar"><div class="stack-fill" style="width:75%"></div></div>
+        <span class="stack-lvl">principal · swing · OOP</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">HTML / CSS</span>
+        <div class="stack-bar"><div class="stack-fill" style="width:70%"></div></div>
+        <span class="stack-lvl">sólido</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">JavaScript</span>
+        <div class="stack-bar"><div class="stack-fill" style="width:40%"></div></div>
+        <span class="stack-lvl">aprendiendo</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Python</span>
+        <div class="stack-bar"><div class="stack-fill" style="width:40%"></div></div>
+        <span class="stack-lvl">aprendiendo</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">PHP</span>
+        <div class="stack-bar"><div class="stack-fill" style="width:30%"></div></div>
+        <span class="stack-lvl">básico</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">MySQL</span>
+        <div class="stack-bar"><div class="stack-fill green" style="width:65%"></div></div>
+        <span class="stack-lvl">sólido · consultas · relacional</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Oracle DB</span>
+        <div class="stack-bar"><div class="stack-fill green" style="width:50%"></div></div>
+        <span class="stack-lvl">usado en proyecto real</span>
+      </div>
+      <div class="stack-item">
+        <span class="stack-name">Redes (SMR)</span>
+        <div class="stack-bar"><div class="stack-fill green" style="width:80%"></div></div>
+        <span class="stack-lvl">titulado oficial</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="proyectos">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Proyectos</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="project-card">
+      <div class="project-meta">
+        <span class="project-badge badge-blue">Java · Desktop</span>
+        <span class="project-badge badge-green">DAM 1º</span>
+      </div>
+      <div class="project-title">Sistema de Gestión de Tienda</div>
+      <p class="project-desc">
+        Aplicación de escritorio completa para la <span class="hl">gestión integral de una tienda ficticia</span>: stock, IVA, clientes, vendedores y más. Interfaz construida con <span class="hl">Java Swing</span> y persistencia de datos sobre <span class="hl">Oracle Database</span>, con consultas SQL reales y un modelo de datos relacional completo.
+      </p>
+      <div class="tech-list">
+        <span class="tech-tag">Java</span>
+        <span class="tech-tag">Java Swing</span>
+        <span class="tech-tag">Oracle DB</span>
+        <span class="tech-tag">SQL</span>
+        <span class="tech-tag">POO</span>
+        <span class="tech-tag">MVC</span>
+      </div>
+      <!-- IMPORTANTE: cambia esta URL por el enlace exacto a tu repositorio -->
+      <a href="https://github.com/Joniitesst/TU-REPO-AQUI" class="project-link" target="_blank">ver repositorio ↗</a>
+    </div>
+  </section>
+
+  <section class="section" id="sobre-mi">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Sobre mí</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-item">
+        <div class="about-key">estado</div>
+        <div class="about-val"><span class="status"><span class="status-dot"></span><span class="green">disponible</span></span> · buscando prácticas</div>
+      </div>
+      <div class="about-item">
+        <div class="about-key">ubicación</div>
+        <div class="about-val">España · remoto ok</div>
+      </div>
+      <div class="about-item">
+        <div class="about-key">formación actual</div>
+        <div class="about-val">DAM — <span class="accent">2º año</span></div>
+      </div>
+      <div class="about-item">
+        <div class="about-key">titulación previa</div>
+        <div class="about-val">Técnico en SMR</div>
+      </div>
+      <div class="about-item">
+        <div class="about-key">objetivo ahora</div>
+        <div class="about-val"><span class="accent">Full Stack Developer</span></div>
+      </div>
+      <div class="about-item">
+        <div class="about-key">objetivo a futuro</div>
+        <div class="about-val">Desarrollo de videojuegos 🎮</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Contacto</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-box">
+      <div>
+        <div class="contact-label">¿hablamos?</div>
+        <div class="contact-title">Prácticas, proyectos<br>o simplemente conectar.</div>
+        <div class="contact-email">jonathanfdzprz@gmail.com</div>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:jonathanfdzprz@gmail.com" class="contact-link">✉ email</a>
+        <a href="https://github.com/Joniitesst" class="contact-link" target="_blank">⌥ github</a>
+        <!-- IMPORTANTE: cambia la URL de LinkedIn cuando tengas perfil -->
+        <a href="https://www.linkedin.com/in/jonathan-fernández-pérez-363a8a329/" class="contact-link" target="_blank">in linkedin</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 Joni · jonathanfdzprz@gmail.com</span>
+    <span class="footer-note">// hecho con código propio</span>
+  </div>
+</footer>
+
+</body>
+</html>
